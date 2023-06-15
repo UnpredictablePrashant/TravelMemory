@@ -1,6 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
+import { baseUrl } from "../../url";
+import axios from "axios";
 
 export default function AddExperience() {
+    const [formdata, setFormdata] = useState({
+            tripName: "",
+            startDateOfJourney: "",
+            endDateOfJourney: "",
+            nameOfHotels: "",
+            placesVisited: "",
+            totalCost: 0,
+            experience: "",
+            image: "",
+            tripType: "",
+            featured: false,
+            shortDescription: ""
+    })
+    const submitForm = () => {
+        console.log(formdata)
+        axios.post(`${baseUrl}/trip`, formdata)
+    }
+
   return (
     <div style={{ margin: "2%" }}>
       <div class="mb-3">
@@ -12,6 +32,8 @@ export default function AddExperience() {
           class="form-control"
           id="tripName"
           placeholder="Add your Trip Name"
+          value={formdata.tripName}
+          onChange={(e) => setFormdata({...formdata, tripName: e.target.value})}
         ></input>
       </div>
       <div class="mb-3">
@@ -20,22 +42,30 @@ export default function AddExperience() {
         </label>
         <div class="row">
           <div class="col-6">
-            <input type="date" class="form-control" id="startDate"></input>
+            <input type="date" class="form-control" id="startDate"
+            value={formdata.startDateOfJourney}
+            onChange={(e)=> setFormdata({...formdata, startDateOfJourney: e.target.value})}
+            ></input>
           </div>
           <div class="col-6">
-            <input type="date" class="form-control" id="endDate"></input>
+            <input type="date" class="form-control" id="endDate"
+            value={formdata.endDateOfJourney}
+            onChange={(e)=> setFormdata({...formdata, endDateOfJourney: e.target.value})}
+            ></input>
           </div>
         </div>
       </div>
       <div class="mb-3">
         <label for="nameOfHotels" class="form-label">
-          Trip Name
+          Name of Hotels
         </label>
         <input
           type="text"
           class="form-control"
           id="nameOfHotels"
           placeholder="Add your Hotel Name"
+          value={formdata.nameOfHotels}
+        onChange={(e)=> setFormdata({...formdata, nameOfHotels: e.target.value})}
         ></input>
       </div>
       <div class="mb-3">
@@ -44,7 +74,10 @@ export default function AddExperience() {
             <label for="nameOfHotels" class="form-label">
               Trip Type
             </label>
-            <select class="form-select" id="tripType" aria-label="tripType">
+            <select class="form-select" id="tripType" aria-label="tripType"
+            value={formdata.tripType}
+            onChange={(e)=> setFormdata({...formdata, tripType: e.target.value})}
+            >
               <option selected value="backpacking">
                 Backpacking
               </option>
@@ -61,6 +94,8 @@ export default function AddExperience() {
               class="form-control"
               id="totalCost"
               placeholder="99999"
+              value={formdata.totalCost}
+            onChange={(e)=> setFormdata({...formdata, totalCost: e.target.value})}
             ></input>
           </div>
         </div>
@@ -74,6 +109,8 @@ export default function AddExperience() {
           class="form-control"
           id="placesVisited"
           placeholder="Delhi, Paris, London, etc."
+          value={formdata.placesVisited}
+            onChange={(e)=> setFormdata({...formdata, placesVisited: e.target.value})}
         ></input>
       </div>
       <div class="mb-3">
@@ -86,6 +123,8 @@ export default function AddExperience() {
             class="form-check-input"
             id="true"
             value={true}
+            onChange={(e)=> setFormdata({...formdata, featured: JSON.parse(e.target.value)})}
+            checked={formdata.featured === true}
           ></input>
           <label>True</label>
         </div>
@@ -95,6 +134,8 @@ export default function AddExperience() {
             class="form-check-input"
             id="false"
             value={false}
+            onChange={(e)=> setFormdata({...formdata, featured: JSON.parse(e.target.value)})}
+            checked={formdata.featured === false}
           ></input>
           <label>False</label>
         </div>
@@ -108,6 +149,8 @@ export default function AddExperience() {
           class="form-control"
           id="image"
           placeholder="http://xyz.com/image.png"
+          value={formdata.image}
+        onChange={(e)=> setFormdata({...formdata, image: e.target.value})}
         ></input>
       </div>
       <div class="mb-3">
@@ -119,6 +162,8 @@ export default function AddExperience() {
           id="shortDescription"
           rows="2"
           placeholder="Write Short Description"
+          value={formdata.shortDescription}
+            onChange={(e)=> setFormdata({...formdata, shortDescription: e.target.value})}
         ></textarea>
       </div>
       <div class="mb-3">
@@ -130,10 +175,12 @@ export default function AddExperience() {
           id="experience"
           rows="5"
           placeholder="Write Complete Details about your experience in the trip."
+          value={formdata.experience}
+            onChange={(e)=> setFormdata({...formdata, experience: e.target.value})}
         ></textarea>
       </div>
       <div class="mb-3" style={{ textAlign: "center"}}>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" onClick={submitForm}>Submit</button>
       </div>
     </div>
   );

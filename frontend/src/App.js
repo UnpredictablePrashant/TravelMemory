@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     element: <AddExperience></AddExperience>
   },
   {
-    path: '/experiencedetails',
+    path: '/experiencedetails/:id',
     element: <ExperienceDetails></ExperienceDetails>
   }
 ])
