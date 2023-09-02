@@ -1,5 +1,12 @@
 # Travel Memory
 
+`.env` file to work with the backend:
+
+```
+MONGO_URI='ENTER_YOUR_URL'
+PORT=3000
+```
+
 Data format to be added: 
 
 ```json
