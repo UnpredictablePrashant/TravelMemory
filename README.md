@@ -91,7 +91,41 @@ Make sure your EC2 instance security group allows port 3000.
 Server started at http://localhost:3000
 * localhost is your public IP
 Output must be --  Cannot GET /
-# Installing nginx and reverse proxy in Backend instance
+# Installing nginx and reverse proxy in the Backend instance
+Installing nginx and doing reverse proxy to http://localhost:3000
+
+```
+sudo apt install nginx -y
+
+sudo systemctl start nginx
+
+sudo systemctl enable nginx
+```
+Change the sites-available default file 
+```
+cd /etc/nginx/sites-available
+nano default
+```
+update the comments mentioned below in the location part 
+```
+proxy_pass http://localhost:3000;
+proxy_http_version 1.1;
+proxy_set_header Upgrade $http_upgrade;
+proxy_set_header Connection 'upgrade';
+proxy_set_header Host $host;
+proxy_cache_bypass $http_upgrade;
+```
+restart nginx server
+```
+sudo systemctl restart nginx
+```
+Now check the public IP of your EC2 instance
+
+http://public_ip:80
+
+Output must be --  Cannot GET /
+!!! congrats reverse proxy to nginx server is done in your instance!!!
+
 
 # Front-end instance 
 Let's connect with your frontend instance move to src folder
@@ -113,5 +147,7 @@ npm start
 ```
 your server starts, check the web browser http://localhost:3000
 * localhost is your frontend public IP 
-# Install nginx and do reverse proxy
+# Install nginx and do reverse proxy similar to a backend instance. 
+Now check the public IP of your EC2 instance
 
+http://public_ip:80
