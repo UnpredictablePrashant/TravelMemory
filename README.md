@@ -154,10 +154,10 @@ http://public_ip:80
 
 # Domain Purchase, DNS configuration, and CloudFlare Setup
 
-* Domain Purchase:
+* **Domain Purchase:**
    - Visit a domain registrar like GoDaddy.(URL: https://www.godaddy.com/en-in )
    - Search for your desired domain name and complete the purchase process.
-* DNS Configuration at Registrar:
+* **DNS Configuration at Registrar:**
 • Log in to your domain registrar’s dashboard.
 • Navigate to the DNS management section.
 • Add an A record:
@@ -165,7 +165,7 @@ http://public_ip:80
 – Name: @
 – Value: [IP of your frontend EC2 instance]
 – TTL: 600 (or as per your preference)
-* Setting up CloudFlare:
+* **Setting up CloudFlare:**
 • Register and log in to Cloudflare.(URL: https://dash.cloudflare.com/login )
 • Add your new domain to CloudFlare and select the free plan.
 • Follow the instructions to change your domain’s nameservers to CloudFlare’s nameservers.
