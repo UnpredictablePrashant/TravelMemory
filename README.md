@@ -151,3 +151,74 @@ your server starts, check the web browser http://localhost:3000
 Now check the public IP of your EC2 instance
 
 http://public_ip:80
+
+# Domain Purchase, DNS configuration, and CloudFlare Setup
+
+* Domain Purchase:
+   - Visit a domain registrar like GoDaddy.(URL: https://www.godaddy.com/en-in )
+   - Search for your desired domain name and complete the purchase process.
+* DNS Configuration at Registrar:
+• Log in to your domain registrar’s dashboard.
+• Navigate to the DNS management section.
+• Add an A record:
+– Type: A
+– Name: @
+– Value: [IP of your frontend EC2 instance]
+– TTL: 600 (or as per your preference)
+* Setting up CloudFlare:
+• Register and log in to Cloudflare.(URL: https://dash.cloudflare.com/login )
+• Add your new domain to CloudFlare and select the free plan.
+• Follow the instructions to change your domain’s nameservers to CloudFlare’s nameservers.
+• After the nameserver update, go to the DNS section in CloudFlare.
+• Add an A record for the frontend server and another for the backend server:
+– Frontend: Type: A, Name: [domain name], IP Address:
+[frontend EC2 IP], Proxy status: DNS only (unproxied)
+– Backend (API): Type: A, Name: api, IP Address: [backend
+EC2 IP], Proxy status: DNS only (unproxied)
+* Updating Frontend Application:
+• Update the frontend/src/url.js file to use the new backend API URL (http://api.[your domain name]).
+* Restart and Verification:
+• Restart both frontend and backend applications to apply the changes.
+• Access your domain name via HTTP and verify that the application functions correctly.
+
+# Implementing SSL with Certbo
+
+* Certbot Installation:
+• First, ensure Snapd is installed and up to date:
+```
+sudo apt-get update
+sudo apt-get install snapd
+```
+• Remove any existing Certbot installations (if any):
+```
+sudo apt-get remove certbot
+```
+• Install Certbot using snap:
+```
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+```
+*Obtaining SSL Certificate:
+• Run Certbot with the Nginx plugin:
+```
+sudo certbot --nginx
+```
+• Follow the on-screen instructions to select your domain and obtain
+the certificate. Certbot will automatically modify the Nginx configuration to use the SSL certificate.
+* Testing and Restarting Nginx:
+• Test the Nginx configuration for syntax errors:
+```
+sudo nginx -t
+```
+• Restart Nginx to apply the new configuration:
+```
+sudo systemctl restart nginx
+```
+* Verification:
+• Access your application using https://[your-domain-name] to verify that SSL is working correctly.
+• You should see a secure (padlock) icon in the browser’s address bar.
+
+* Updating Frontend Configuration:
+• Update the frontend/src/url.js file to use HTTPS for the backend
+URL.
+• Restart the frontend application to apply the change.
