@@ -173,11 +173,11 @@ http://public_ip:80
 * Follow the instructions to change your domain’s nameservers to CloudFlare’s nameservers.
 * After the nameserver update, go to the DNS section in CloudFlare.
 * Add an A record for the frontend server and another for the backend server:
-* ** Frontend:**
-   *Type: A,
+* **Frontend:**
+   * Type: A,
    * Name: [domain name],
    * IP Address: [frontend EC2 IP], Proxy status: DNS only (unproxied)
-* ** Backend (API): **
+* **Backend (API):**
     * Type: A,
     * Name: api,
     * IP Address: [backend EC2 IP], Proxy status: DNS only (unproxied)
