@@ -162,10 +162,10 @@ http://public_ip:80
 * Log in to your domain registrar’s dashboard.
 * Navigate to the DNS management section.
 * Add an A record:
-– Type: A
-– Name: @
-– Value: [IP of your frontend EC2 instance]
-– TTL: 600 (or as per your preference)
+   *Type: A
+   *Name: @
+   * Value: [IP of your frontend EC2 instance]
+   * TTL: 600 (or as per your preference)
 
 **Setting up CloudFlare:**
 * Register and log in to Cloudflare.(URL: https://dash.cloudflare.com/login )
@@ -173,10 +173,14 @@ http://public_ip:80
 * Follow the instructions to change your domain’s nameservers to CloudFlare’s nameservers.
 * After the nameserver update, go to the DNS section in CloudFlare.
 * Add an A record for the frontend server and another for the backend server:
-– Frontend: Type: A, Name: [domain name], IP Address:
-[frontend EC2 IP], Proxy status: DNS only (unproxied)
-– Backend (API): Type: A, Name: api, IP Address: [backend
-EC2 IP], Proxy status: DNS only (unproxied)
+*** Frontend:**
+   *Type: A,
+   * Name: [domain name],
+   * IP Address: [frontend EC2 IP], Proxy status: DNS only (unproxied)
+*** Backend (API): **
+    * Type: A,
+    * Name: api,
+    * IP Address: [backend EC2 IP], Proxy status: DNS only (unproxied)
 
 **Updating Frontend Application:**
 * Update the frontend/src/url.js file to use the new backend API URL (http://api.[your domain name]).
@@ -219,7 +223,7 @@ sudo nginx -t
 sudo systemctl restart nginx
 ```
  **Verification:**
-* Access your application using https://[your-domain-name] to verify that SSL is working correctly.
+* Access your application using https://[your-domain-name] to verify that SSL is working correctly.
 * You should see a secure (padlock) icon in the browser’s address bar.
 
 * Updating Frontend Configuration:
