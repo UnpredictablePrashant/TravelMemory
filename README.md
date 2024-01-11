@@ -60,6 +60,13 @@ Installed nginx on both frontend and backend and set up a proxy to redirect to r
 
 Changed the URL to ip of the backend as the default configuration internally accesses http://localhost:3000 for the backend server
 
+Started both servers
+frontend by
+npm start
+
+backend by
+node index.js
+
 Restarted the nginx
 The backend and frontend applications are accessed through IP from the browser.
 -----------------------------------------------------------
