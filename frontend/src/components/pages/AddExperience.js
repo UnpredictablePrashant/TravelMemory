@@ -86,9 +86,10 @@ export default function AddExperience() {
                 value={formdata.tripType}
                 onChange={(e)=> setFormdata({...formdata, tripType: e.target.value})}
                 >
-                  <option selected value="backpacking">
-                    Backpacking
+                  <option selected value="select">
+                    Select One
                   </option>
+                  <option value="backpacking">Backpacking</option>
                   <option value="leisure">Leisure</option>
                   <option value="business">Business</option>
                 </select>
