@@ -1,5 +1,12 @@
 # Travel Memory
 
+`.env` file to work with the backend after creating a database in mongodb: 
+
+```
+MONGO_URI='ENTER_YOUR_URL'
+PORT=3001
+```
+
 Data format to be added: 
 
 ```json
@@ -16,4 +23,10 @@ Data format to be added:
     "shortDescription":"India is a wonderful country with rich culture and good people.",
     "featured": true
 }
+```
+
+
+For frontend, you need to create `.env` file and put the following content (remember to change it based on your requirements):
+```bash
+REACT_APP_BACKEND_URL=http://localhost:3001
 ```
