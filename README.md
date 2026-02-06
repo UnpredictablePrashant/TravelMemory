@@ -3,24 +3,25 @@
 `.env` file to work with the backend after creating a database in mongodb: 
 
 ```
-MONGO_URI='ENTER_YOUR_URL'
-PORT=3001
+MONGO_URI=mongodb+srv://traveladmin:F%4015051996cy@travelmemory.mi4emt9.mongodb.net/?appName=travelmemory
+
+PORT=3000
 ```
 
 Data format to be added: 
 
 ```json
 {
-    "tripName": "Incredible India",
-    "startDateOfJourney": "19-03-2022",
-    "endDateOfJourney": "27-03-2022",
-    "nameOfHotels":"Hotel Namaste, Backpackers Club",
-    "placesVisited":"Delhi, Kolkata, Chennai, Mumbai",
-    "totalCost": 800000,
-    "tripType": "leisure",
-    "experience": "Lorem Ipsum, Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum,Lorem Ipsum, ",
-    "image": "https://t3.ftcdn.net/jpg/03/04/85/26/360_F_304852693_nSOn9KvUgafgvZ6wM0CNaULYUa7xXBkA.jpg",
-    "shortDescription":"India is a wonderful country with rich culture and good people.",
+      "tripName": "Road Trip to Karnataka",
+    "startDateOfJourney": "24-12-2025",
+    "endDateOfJourney": "02-01-2026",
+    "nameOfHotels":"Club Mahindra",
+    "placesVisited":"Mysore, Humpi, Otty, Coorg",
+    "totalCost": 60000,
+    "tripType": "backpacking",
+    "experience": "awesome and peaceful experience",
+    "image": "https://www.bing.com/images/search?q=virupaksha+temple+hampi&form=HDRSC3&first=1",
+    "shortDescription":"Road Trips are the best choice, its one of my best trip.",
     "featured": true
 }
 ```
