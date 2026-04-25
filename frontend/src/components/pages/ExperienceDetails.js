@@ -31,6 +31,7 @@ export default function ExperienceDetails(props) {
             <img
               src={data.image}
               alt="Tag"
+              style={{ width: "100%", maxHeight: "500px", objectFit: "cover", borderRadius: "8px" }}
             ></img>
           </div>
           <div class="col-2"></div>

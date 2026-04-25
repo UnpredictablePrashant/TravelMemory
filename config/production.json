@@ -1,0 +1,19 @@
+{
+  "app": {
+    "name": "TravelMemory",
+    "env": "production"
+  },
+  "backend": {
+    "port": 3001,
+    "url": "https://travelmemory.jidolabs.com/api",
+    "corsOrigin": "https://travelmemory.jidolabs.com"
+  },
+  "frontend": {
+    "port": 80,
+    "url": "https://travelmemory.jidolabs.com",
+    "backendUrl": "https://travelmemory.jidolabs.com/api"
+  },
+  "database": {
+    "name": "devops-project-1"
+  }
+}

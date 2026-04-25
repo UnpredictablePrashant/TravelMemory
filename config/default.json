@@ -1,0 +1,9 @@
+{
+  "app": {
+    "name": "TravelMemory",
+    "env": "development"
+  },
+  "database": {
+    "name": "devops-project-1"
+  }
+}
