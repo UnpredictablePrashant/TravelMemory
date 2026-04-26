@@ -5,7 +5,7 @@ aws_region: ap-south-1
 # Use the same values in AWS Resource Groups or: python automation/list_project_resources.py
 project:
   tag_key: Project
-  tag_value: travelmomery16
+  tag_value: travelmemory16
 
 network:
   # Leave blank to auto-detect default VPC and first available subnets.

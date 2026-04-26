@@ -415,7 +415,7 @@ cp automation/config.example.yaml automation/config.yaml
 Update `automation/config.yaml`:
 
 - `aws_profile`, `aws_region`
-- `project.tag_key` and `project.tag_value` (for example `Project` / `travelmomery16`): applied to the security group, ALB, target group, and every app EC2 instance after each `aws_setup.py` run so you can filter resources in the console or with `python automation/list_project_resources.py`
+- `project.tag_key` and `project.tag_value` (for example `Project` / `travelmemory16`): applied to the security group, ALB, target group, and every app EC2 instance after each `aws_setup.py` run so you can filter resources in the console or with `python automation/list_project_resources.py`
 - **Either** `ec2.instance_ids` (existing app instances) **or** `ec2.launch.enabled: true` with `ec2.launch.key_name` (and optional `count`, `instance_type`, `ami_id`)
 - Optional `network.vpc_id` and `network.subnet_ids` (leave blank to auto-detect default VPC/subnets)
 - `cloudflare.domain` and `cloudflare.subdomain`

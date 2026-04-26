@@ -123,6 +123,47 @@ def get_default_vpc_and_subnets(ec2_client: Any) -> tuple[str, list[str]]:
     return vpc_id, subnet_ids
 
 
+def select_alb_subnet_ids(
+    ec2_client: Any, vpc_subnet_ids: list[str], instance_ids: list[str]
+) -> list[str]:
+    """
+    Subnets for a new ALB: at least two AZs, and every AZ where the given instances run.
+
+    Using only the first two VPC subnets (lexicographic) can omit the instance AZ; targets
+    then show Target.NotInUse / AZ not enabled for the load balancer.
+    """
+    if len(vpc_subnet_ids) < 2:
+        raise RuntimeError("ALB requires at least 2 subnets in the VPC.")
+    merged_ids = list(dict.fromkeys(vpc_subnet_ids))
+    instance_subnet_ids: list[str] = []
+    if instance_ids:
+        res = ec2_client.describe_instances(InstanceIds=instance_ids)["Reservations"]
+        for r in res:
+            for inst in r.get("Instances", []):
+                if inst.get("State", {}).get("Name") in ("terminated", "shutting-down"):
+                    continue
+                sid = inst["SubnetId"]
+                instance_subnet_ids.append(sid)
+                if sid not in merged_ids:
+                    merged_ids.append(sid)
+    sn_all = ec2_client.describe_subnets(SubnetIds=merged_ids)["Subnets"]
+    az_to_subnet: dict[str, str] = {}
+    for sid in dict.fromkeys(instance_subnet_ids):
+        az = next(s["AvailabilityZone"] for s in sn_all if s["SubnetId"] == sid)
+        az_to_subnet[az] = sid
+
+    for s in sorted(sn_all, key=lambda x: (x["AvailabilityZone"], x["SubnetId"])):
+        az = s["AvailabilityZone"]
+        if az not in az_to_subnet:
+            az_to_subnet[az] = s["SubnetId"]
+        if len(az_to_subnet) >= 2:
+            break
+
+    if len(az_to_subnet) < 2:
+        raise RuntimeError("Could not pick 2+ subnets in different AZs for the ALB.")
+    return list(az_to_subnet.values())
+
+
 def ensure_security_group(ec2_client: Any, config: dict[str, Any], vpc_id: str) -> str:
     sg_cfg = config["security_group"]
     sg_name = sg_cfg["name"]
@@ -182,7 +223,9 @@ def ensure_target_group(elbv2_client: Any, config: dict[str, Any], vpc_id: str) 
     return response["TargetGroups"][0]["TargetGroupArn"]
 
 
-def ensure_load_balancer(elbv2_client: Any, config: dict[str, Any], subnet_ids: list[str], sg_id: str) -> dict[str, str]:
+def ensure_load_balancer(
+    elbv2_client: Any, config: dict[str, Any], alb_subnet_ids: list[str], sg_id: str
+) -> dict[str, str]:
     alb_cfg = config["load_balancer"]
     alb_name = alb_cfg["name"]
     try:
@@ -192,10 +235,9 @@ def ensure_load_balancer(elbv2_client: Any, config: dict[str, Any], subnet_ids: 
         if "LoadBalancerNotFound" not in str(err):
             raise
 
-    selected_subnets = alb_cfg.get("subnet_ids") or subnet_ids[:2]
     created = elbv2_client.create_load_balancer(
         Name=alb_name,
-        Subnets=selected_subnets,
+        Subnets=alb_subnet_ids,
         SecurityGroups=[sg_id],
         Scheme=alb_cfg.get("scheme", "internet-facing"),
         Type="application",
@@ -436,7 +478,10 @@ def main() -> None:
     instance_ids, instance_source = ensure_instance_ids(ec2, config, subnet_ids, sg_id)
     ensure_instances_running(ec2, instance_ids)
     tg_arn = ensure_target_group(elbv2, config, vpc_id)
-    lb_info = ensure_load_balancer(elbv2, config, subnet_ids, sg_id)
+    lb_subnet_ids = (config.get("load_balancer") or {}).get("subnet_ids") or []
+    if not lb_subnet_ids:
+        lb_subnet_ids = select_alb_subnet_ids(ec2, subnet_ids, instance_ids)
+    lb_info = ensure_load_balancer(elbv2, config, lb_subnet_ids, sg_id)
     listener_arn = ensure_listener(elbv2, config, lb_info["arn"], tg_arn)
     register_targets(
         elbv2,
