@@ -1,0 +1,50 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: travel-mongo
+    volumes:
+      - travelmemory-mongo-data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    ports:
+      - 27017:27017
+    networks:
+      - travelmemory-net
+
+  backend:
+    container_name: travel-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 3001:3001
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://admin:password@mongo:27017/travelmemory?authSource=admin
+    networks:
+      - travelmemory-net
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  frontend:
+    container_name: travel-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    networks:
+      - travelmemory-net
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  travelmemory-mongo-data:
+
+networks:
+  travelmemory-net:
+    driver: bridge
