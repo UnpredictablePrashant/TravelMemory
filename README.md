@@ -172,7 +172,7 @@ http://<ALB-DNS>/hello
 Expected response:
 
 ```
-OK
+Hello World!
 ```
 
 ---
