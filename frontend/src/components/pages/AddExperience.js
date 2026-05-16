@@ -24,7 +24,7 @@ export default function AddExperience() {
         setLoading(false)
     }
 
-    if(loading==true){
+    if(loading===true){
       return(
         <div>Loading...</div>
       )
