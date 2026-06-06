@@ -30,3 +30,20 @@ For frontend, you need to create `.env` file and put the following content (reme
 ```bash
 REACT_APP_BACKEND_URL=http://localhost:3001
 ```
+
+## How to run BE
+
+Note: Make sure you have the .env file already added
+```bash
+cd backend
+npm install
+node index.js
+```
+
+## How to run FE
+Note: Make sure you have the .env file already added
+```bash
+cd frontend
+npm install
+npm start
+```
