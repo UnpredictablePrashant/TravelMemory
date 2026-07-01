@@ -1,0 +1,46 @@
+<mxfile host="app.diagrams.net" modified="2026-04-25T10:20:00.000Z" agent="Codex" version="24.7.17">
+  <diagram id="travelmemory-arch" name="TravelMemory-Deployment">
+    <mxGraphModel dx="1280" dy="720" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="user" value="User Browser" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="60" y="220" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cf" value="Cloudflare DNS/Proxy&#xa;(travel.yourdomain.com)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="260" y="210" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="alb" value="AWS Application Load Balancer&#xa;(HTTP/HTTPS)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="560" y="210" width="240" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ec2a" value="EC2 Instance A&#xa;Nginx + React Build&#xa;Node Backend (PM2)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="870" y="130" width="230" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ec2b" value="EC2 Instance B&#xa;Nginx + React Build&#xa;Node Backend (PM2)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="870" y="280" width="230" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="mongo" value="MongoDB Atlas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1190" y="210" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="" style="endArrow=block;html=1;strokeWidth=2;" edge="1" parent="1" source="user" target="cf">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="" style="endArrow=block;html=1;strokeWidth=2;" edge="1" parent="1" source="cf" target="alb">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="" style="endArrow=block;html=1;strokeWidth=2;" edge="1" parent="1" source="alb" target="ec2a">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="" style="endArrow=block;html=1;strokeWidth=2;" edge="1" parent="1" source="alb" target="ec2b">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="" style="endArrow=block;html=1;dashed=1;strokeWidth=2;" edge="1" parent="1" source="ec2a" target="mongo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="" style="endArrow=block;html=1;dashed=1;strokeWidth=2;" edge="1" parent="1" source="ec2b" target="mongo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

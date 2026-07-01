@@ -1,5 +1,14 @@
 # Travel Memory
 
+Deployment documentation for your assignment is available at:
+
+- `docs/AWS_DEPLOYMENT_GUIDE.md`
+- `docs/TravelMemory-architecture.drawio`
+- `docs/IAM_GROUP_ADMIN_MERN.md` (IAM group and permission setup for deployment admins)
+- `automation/aws_setup.py` (one-time AWS setup using external YAML config)
+- `automation/start_instances.py`, `automation/stop_instances.py`, `automation/auto_stop_after_idle.py` (cost-control scripts)
+- `automation/stop_chargeable_resources.py` (stop EC2 + optional ALB stack cleanup)
+
 `.env` file to work with the backend after creating a database in mongodb: 
 
 ```
