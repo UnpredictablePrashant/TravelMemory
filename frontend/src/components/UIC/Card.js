@@ -1,24 +1,26 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom";
+import TripImage from "./TripImage";
+import { capitalize, formatDate } from "../../format";
 
-
-export default function Card(props) {
-    const navigate = useNavigate()
-    const visitDetails = () => {
-        navigate(`/experiencedetails/${props.id}`)
-    }
+export default function Card({ id, title, tripType, description, image, startDate, featured }) {
   return (
-    <div style={{ marginBottom: "2%", marginTop: "2%"}}>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{props.title}</h5>
-          <h6 class="card-subtitle mb-2 text-body-secondary">{props.tripType}</h6>
-          <p class="card-text">
-            {props.description}
-          </p>
-          <button class="card-link btn btn-primary" onClick={visitDetails}>
+    <div className="col">
+      <div className={`card tm-card h-100 ${featured ? "tm-card--featured" : ""}`}>
+        <div className="tm-card__media">
+          <TripImage image={image} alt={title} className="tm-card__image" />
+          {featured && <span className="badge tm-badge-featured">★ Featured</span>}
+        </div>
+        <div className="card-body d-flex flex-column">
+          <div className="d-flex justify-content-between align-items-start gap-2 mb-1">
+            <h3 className="card-title h5 mb-0 text-truncate" title={title}>{title}</h3>
+            {tripType && <span className={`badge tm-type tm-type--${tripType}`}>{capitalize(tripType)}</span>}
+          </div>
+          {startDate && <small className="text-body-secondary mb-2">{formatDate(startDate)}</small>}
+          <p className="card-text tm-card__desc">{description}</p>
+          <Link to={`/experiencedetails/${id}`} className="btn btn-outline-primary mt-auto stretched-link">
             More Details
-          </button>
+          </Link>
         </div>
       </div>
     </div>

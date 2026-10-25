@@ -1,10 +1,14 @@
 const mongoose = require('mongoose')
-const URL = process.env.MONGO_URI
+const config = require('./config')
 
-mongoose.connect(URL)
-mongoose.Promise = global.Promise
+// Strip query selectors like { $gt: '' } from user supplied filters (NoSQL injection guard)
+mongoose.set('sanitizeFilter', true)
+mongoose.set('strictQuery', true)
 
 const db = mongoose.connection
-db.on('error', console.error.bind(console, 'DB ERROR: '))
+db.on('error', (err) => console.error('DB ERROR:', err.message))
+db.on('disconnected', () => console.warn('DB disconnected'))
 
-module.exports = {db, mongoose}
+const connect = () => mongoose.connect(config.mongoUri, { serverSelectionTimeoutMS: 10000 })
+
+module.exports = { db, mongoose, connect }
